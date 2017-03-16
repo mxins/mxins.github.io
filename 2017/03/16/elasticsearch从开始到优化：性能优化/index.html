@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Elasticsearch," />
 
 
 
@@ -87,12 +87,25 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Xin's blog">
-<meta property="og:url" content="http://www.followeye.com/index.html">
+<meta name="description" content="Elasticsearch默认配置提供了良好的开箱即用的体验。但在不同的场景下，也有许多优化方法来提高Elasticsearch的性能。  
+通用建议不要返回大的查询结果集如果需要，使用 scroll 接口。 
+避免大文档Elasticsearch和Lucene都有文档大小限制。大的文档会造成更多的网络、内存、磁盘的消耗，影响索引和搜索速度。  
+避免稀疏Elasticsearch依赖Lucene">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Elasticsearch从开始到优化：性能优化》">
+<meta property="og:url" content="http://www.followeye.com/2017/03/16/elasticsearch从开始到优化：性能优化/index.html">
 <meta property="og:site_name" content="Xin's blog">
+<meta property="og:description" content="Elasticsearch默认配置提供了良好的开箱即用的体验。但在不同的场景下，也有许多优化方法来提高Elasticsearch的性能。  
+通用建议不要返回大的查询结果集如果需要，使用 scroll 接口。 
+避免大文档Elasticsearch和Lucene都有文档大小限制。大的文档会造成更多的网络、内存、磁盘的消耗，影响索引和搜索速度。  
+避免稀疏Elasticsearch依赖Lucene">
+<meta property="og:updated_time" content="2017-03-16T11:23:26.657Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Xin's blog">
+<meta name="twitter:title" content="《Elasticsearch从开始到优化：性能优化》">
+<meta name="twitter:description" content="Elasticsearch默认配置提供了良好的开箱即用的体验。但在不同的场景下，也有许多优化方法来提高Elasticsearch的性能。  
+通用建议不要返回大的查询结果集如果需要，使用 scroll 接口。 
+避免大文档Elasticsearch和Lucene都有文档大小限制。大的文档会造成更多的网络、内存、磁盘的消耗，影响索引和搜索速度。  
+避免稀疏Elasticsearch依赖Lucene">
 
 
 
@@ -120,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://www.followeye.com/"/>
+  <link rel="canonical" href="http://www.followeye.com/2017/03/16/elasticsearch从开始到优化：性能优化/"/>
 
 
 
 
 
-  <title> Xin's blog </title>
+  <title> 《Elasticsearch从开始到优化：性能优化》 | Xin's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -151,9 +164,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -236,9 +247,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -268,10 +279,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/03/16/elasticsearch从开始到优化：性能优化/" itemprop="url">
-                  《Elasticsearch从开始到优化：性能优化》
-                </a>
+                《Elasticsearch从开始到优化：性能优化》
               
             
           </h1>
@@ -322,9 +330,7 @@
       
 
       
-        
-          
-            <p>Elasticsearch默认配置提供了良好的开箱即用的体验。但在不同的场景下，也有许多优化方法来提高Elasticsearch的性能。  </p>
+        <p>Elasticsearch默认配置提供了良好的开箱即用的体验。但在不同的场景下，也有许多优化方法来提高Elasticsearch的性能。  </p>
 <h3 id="通用建议"><a href="#通用建议" class="headerlink" title="通用建议"></a>通用建议</h3><h5 id="不要返回大的查询结果集"><a href="#不要返回大的查询结果集" class="headerlink" title="不要返回大的查询结果集"></a>不要返回大的查询结果集</h5><p>如果需要，使用 <strong><em>scroll</em></strong> 接口。 </p>
 <h5 id="避免大文档"><a href="#避免大文档" class="headerlink" title="避免大文档"></a>避免大文档</h5><p>Elasticsearch和Lucene都有文档大小限制。大的文档会造成更多的网络、内存、磁盘的消耗，影响索引和搜索速度。  </p>
 <h5 id="避免稀疏"><a href="#避免稀疏" class="headerlink" title="避免稀疏"></a>避免稀疏</h5><p>Elasticsearch依赖Lucene来进行索引和存储数据，Lucene背后的数据结构在密集数据时工作的最好。尽量同一个索引下文档结构相同，避免稀疏，相关建议：    </p>
@@ -337,165 +343,87 @@
 </ul>
 <p>.<br>.<br>.  </p>
 
-          
-        
       
     </div>
 
     <div>
       
+        
+
+      
     </div>
 
     <div>
       
-    </div>
-
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.followeye.com/2016/07/13/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Xin Mei">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Xin's blog">
-    </span>
-
-    
-      <header class="post-header">
-
         
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/07/13/hello-world/" itemprop="url">
-                  Hello World
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-07-13T20:46:25+08:00">
-                2016-07-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/wechat-pay.png" alt="Xin Mei WeChat Pay"/>
+          <p>微信打赏</p>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
       
       
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-          
-        
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.jpg" alt="Xin Mei Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
       
     </div>
+  </div>
 
-    <div>
-      
-    </div>
 
-    <div>
       
     </div>
 
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/Elasticsearch/" rel="tag"># Elasticsearch</a>
+          
+        </div>
       
 
       
+        
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/13/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -503,6 +431,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -522,8 +454,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -587,6 +528,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#通用建议"><span class="nav-number">1.</span> <span class="nav-text">通用建议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#不要返回大的查询结果集"><span class="nav-number">1.0.1.</span> <span class="nav-text">不要返回大的查询结果集</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#避免大文档"><span class="nav-number">1.0.2.</span> <span class="nav-text">避免大文档</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#避免稀疏"><span class="nav-number">1.0.3.</span> <span class="nav-text">避免稀疏</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引速度优化"><span class="nav-number">2.</span> <span class="nav-text">索引速度优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用bulk请求"><span class="nav-number">2.0.1.</span> <span class="nav-text">使用bulk请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用多进程-线程向Elasticsearch发送数据"><span class="nav-number">2.0.2.</span> <span class="nav-text">使用多进程/线程向Elasticsearch发送数据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#增加刷新间隔"><span class="nav-number">2.0.3.</span> <span class="nav-text">增加刷新间隔</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#禁止刷新和复制"><span class="nav-number">2.0.4.</span> <span class="nav-text">禁止刷新和复制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#禁止swapping"><span class="nav-number">2.0.5.</span> <span class="nav-text">禁止swapping</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#确保有空闲内存用于文件系统缓存"><span class="nav-number">2.0.6.</span> <span class="nav-text">确保有空闲内存用于文件系统缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用自动生成的id"><span class="nav-number">2.0.7.</span> <span class="nav-text">使用自动生成的id</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用更快的硬件"><span class="nav-number">2.0.8.</span> <span class="nav-text">使用更快的硬件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#索引缓冲区大小"><span class="nav-number">2.0.9.</span> <span class="nav-text">索引缓冲区大小</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搜索速度优化"><span class="nav-number">3.</span> <span class="nav-text">搜索速度优化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#确保有空闲内存用于文件系统缓"><span class="nav-number">3.0.1.</span> <span class="nav-text">确保有空闲内存用于文件系统缓</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用更快的硬件-1"><span class="nav-number">3.0.2.</span> <span class="nav-text">使用更快的硬件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#文档建模"><span class="nav-number">3.0.3.</span> <span class="nav-text">文档建模</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#预热文件系统缓存"><span class="nav-number">3.0.4.</span> <span class="nav-text">预热文件系统缓存</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查询语法优化"><span class="nav-number">3.0.5.</span> <span class="nav-text">查询语法优化</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用routing"><span class="nav-number">3.0.6.</span> <span class="nav-text">使用routing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分索引"><span class="nav-number">3.0.7.</span> <span class="nav-text">分索引</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -692,6 +649,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
