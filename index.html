@@ -324,39 +324,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bigdata/" itemprop="url" rel="index">
-                    <span itemprop="name">bigdata</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bigdata/Elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">Elasticsearch</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -407,15 +374,18 @@
 <ul>
 <li>最小heap size(Xms) 和 最大heap size(Xmx)相等</li>
 <li>最大heap size(Xmx)设置为50%物理内存，剩下50%作为文件系统缓存。</li>
-<li>不超过32G。堆大小在某个cutoff(将近32G)范围内时，JVM使用compressed oops技术来优化内存、带宽、缓存使用。所以最大heap size(Xmx)不要超过这个cutoff。Elasticsearch的log中如果有下面类似的log，表明Xms没超过这个cutoff。</li>
+<li>不超过32GB。堆大小在某个cutoff(将近32GB)范围内时，JVM使用compressed oops技术来优化内存、带宽、缓存使用。所以最大heap size(Xmx)不要超过这个cutoff。Elasticsearch的log中如果有下面类似的log，表明Xms没超过这个cutoff。</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">heap size [1.9gb], compressed ordinary object pointers [true]</div></pre></td></tr></table></figure>
 <ul>
-<li>更好的设置是，heap size不要超过JVM使用zero-based compressed oops技术时的cutoff。不同的系统，cutoff不相同。大部分系统，26G的最大heap size(Xmx)是安全的，有些系统30G也可以。带上 -XX:+UnlockDiagnosticVMOptions -XX:+PrintCompressedOopsMode这两个JVM options启动Elasticsearch时，下面的log则表明启用了zero-based compressed oops技术：</li>
+<li>更好的设置是，heap size不要超过JVM使用zero-based compressed oops技术时的cutoff。不同的系统，cutoff不相同。大部分系统，26GB的最大heap size(Xmx)是安全的，有些系统30G也可以。带上 -XX:+UnlockDiagnosticVMOptions -XX:+PrintCompressedOopsMode这两个JVM options启动Elasticsearch时，下面的log则表明启用了zero-based compressed oops技术：</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">heap address: 0x000000011be00000, size: 27648 MB, zero based Compressed Oops</div></pre></td></tr></table></figure>
 <p>下面的则表明未启用：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">heap address: 0x0000000118400000, size: 28672 MB, Compressed Oops with base: 0x00000001183ff000</div></pre></td></tr></table></figure>
+<p>Java中的对象分配在堆中，由指针引用。这些指向java对象的指针叫做Ordinary object pointers(oop)，他们的大小实际就是CPU的本地字长，32bit或64bit，这 32 bits 或 64 bits 的指针的值，是堆中确定的byte位置。</p>
+<p>所以32-bit的系统中，oop最多只能指向2^32 byte, 即heap size最大只能4GB，而64-bit系统，heap size大的多。64位的指针本身更大，占用空间更多，同一个应用在64-bit系统使用的堆空间大概是32-bit系统的1.5倍。除了更消耗内存，更糟糕的是，更长的指针在主存和各种缓存(LLC, L1等等)间移动时，消耗更多的带宽。</p>
+<p>32 bits 的短指针来引用的内存空间不够，64 bits的长指针会带来性能损耗，怎么办呢？JVM使用了Compressed Ordinary Object Pointers(compressed oops)的技术。这种 32 bits 指针指向的不再是堆中byte 位置，而是对象偏移量。这意味着 32 bits 的指针可以指向2^32个对象，大约32GB大小。一旦超过32G，compressed oops会变成oop，所以heap size不要超过32G。</p>
 <h2 id="Disable-swapping设置"><a href="#Disable-swapping设置" class="headerlink" title="Disable swapping设置"></a>Disable swapping设置</h2><p>swapping(内存交换)会导致JVM heap被交换到磁盘上，导致很差的性能和Elasticsearch节点的不稳定。应该不惜一切代价禁止swapping。禁止swapping的一种方法就是锁住JVM内存</p>
 <h3 id="锁内存"><a href="#锁内存" class="headerlink" title="锁内存"></a>锁内存</h3><p>修改配置文件，<strong>vim elasticsearch-5.1.2/config/elasticsearch.yml</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bootstrap.memory_lock: true</div></pre></td></tr></table></figure>
@@ -696,7 +666,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
