@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Elasticsearch,bigdata,重要配置,optimization," />
+  <meta name="keywords" content="Elasticsearch,Hbase,对比,bigdata," />
 
 
 
@@ -94,25 +94,22 @@
 
 
 
-<meta name="description" content="Elasticsearch启动时会检查一些很重要的设置是否配置，如果没配置，可能会出现无法预料的问题。
-File Descriptors文件描述符设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max file descriptors:
-sudo vim /etc/security/limits.conf
-12* soft nofile 655360* hard">
+<meta name="description" content="Elasticsearch和Hbase都是非常流行的大数据存储方案，有相似也有很大不同，本文对二者做个比较全面的比较。
+介绍Elasticsearch是一个近实时的搜索引擎，对document进行索引和搜索，索引包括基本的CRUD操作，搜索基于自己的Query DSL，能执行复杂的查询，此外还有聚合功能等等。它的数据模型是：索引，类型，文档。
+Hbase是运行与hadoop之上的Nosql数据库，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《Elasticsearch从开始到优化：重要配置》">
-<meta property="og:url" content="http://www.followeye.com/2017/03/19/elasticsearch从开始到优化：重要配置/index.html">
+<meta property="og:title" content="《Elasticsearch与Hbase比较》">
+<meta property="og:url" content="http://www.followeye.com/2017/03/26/Elasticsearch与Hbase比较/index.html">
 <meta property="og:site_name" content="Xin's blog">
-<meta property="og:description" content="Elasticsearch启动时会检查一些很重要的设置是否配置，如果没配置，可能会出现无法预料的问题。
-File Descriptors文件描述符设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max file descriptors:
-sudo vim /etc/security/limits.conf
-12* soft nofile 655360* hard">
-<meta property="og:updated_time" content="2017-03-24T05:41:56.811Z">
+<meta property="og:description" content="Elasticsearch和Hbase都是非常流行的大数据存储方案，有相似也有很大不同，本文对二者做个比较全面的比较。
+介绍Elasticsearch是一个近实时的搜索引擎，对document进行索引和搜索，索引包括基本的CRUD操作，搜索基于自己的Query DSL，能执行复杂的查询，此外还有聚合功能等等。它的数据模型是：索引，类型，文档。
+Hbase是运行与hadoop之上的Nosql数据库，">
+<meta property="og:updated_time" content="2017-03-27T01:54:32.440Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《Elasticsearch从开始到优化：重要配置》">
-<meta name="twitter:description" content="Elasticsearch启动时会检查一些很重要的设置是否配置，如果没配置，可能会出现无法预料的问题。
-File Descriptors文件描述符设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max file descriptors:
-sudo vim /etc/security/limits.conf
-12* soft nofile 655360* hard">
+<meta name="twitter:title" content="《Elasticsearch与Hbase比较》">
+<meta name="twitter:description" content="Elasticsearch和Hbase都是非常流行的大数据存储方案，有相似也有很大不同，本文对二者做个比较全面的比较。
+介绍Elasticsearch是一个近实时的搜索引擎，对document进行索引和搜索，索引包括基本的CRUD操作，搜索基于自己的Query DSL，能执行复杂的查询，此外还有聚合功能等等。它的数据模型是：索引，类型，文档。
+Hbase是运行与hadoop之上的Nosql数据库，">
 
 
 
@@ -140,13 +137,13 @@ sudo vim /etc/security/limits.conf
 
 
 
-  <link rel="canonical" href="http://www.followeye.com/2017/03/19/elasticsearch从开始到优化：重要配置/"/>
+  <link rel="canonical" href="http://www.followeye.com/2017/03/26/Elasticsearch与Hbase比较/"/>
 
 
 
 
 
-  <title> 《Elasticsearch从开始到优化：重要配置》 | Xin's blog </title>
+  <title> 《Elasticsearch与Hbase比较》 | Xin's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -285,7 +282,7 @@ sudo vim /etc/security/limits.conf
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.followeye.com/2017/03/19/elasticsearch从开始到优化：重要配置/">
+    <link itemprop="mainEntityOfPage" href="http://www.followeye.com/2017/03/26/Elasticsearch与Hbase比较/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xin Mei">
@@ -306,7 +303,7 @@ sudo vim /etc/security/limits.conf
             
             
               
-                《Elasticsearch从开始到优化：重要配置》
+                《Elasticsearch与Hbase比较》
               
             
           </h1>
@@ -321,8 +318,8 @@ sudo vim /etc/security/limits.conf
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-19T21:46:25+08:00">
-                2017-03-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-26T23:19:31+08:00">
+                2017-03-26
               </time>
             
 
@@ -362,6 +359,17 @@ sudo vim /etc/security/limits.conf
 
                 
                 
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bigdata/Elasticsearch/Hbase/" itemprop="url" rel="index">
+                    <span itemprop="name">Hbase</span>
+                  </a>
+                </span>
+
+                
+                
               
             </span>
           
@@ -390,47 +398,129 @@ sudo vim /etc/security/limits.conf
       
 
       
-        <p>Elasticsearch启动时会检查一些很重要的设置是否配置，如果没配置，可能会出现无法预料的问题。</p>
-<h2 id="File-Descriptors"><a href="#File-Descriptors" class="headerlink" title="File Descriptors"></a>File Descriptors</h2><p>文件描述符设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max file descriptors:</p>
-<p><strong>sudo vim /etc/security/limits.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* soft nofile 655360</div><div class="line">* hard nofile 655360</div></pre></td></tr></table></figure>
-<p>新打开的session里生效。</p>
-<h2 id="Number-of-threads"><a href="#Number-of-threads" class="headerlink" title="Number of threads"></a>Number of threads</h2><p>用户进程数设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max user processes:</p>
-<p><strong>sudo vim /etc/security/limits.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">*   soft    nproc   50960</div><div class="line">*   hard    nproc   50960</div></pre></td></tr></table></figure>
-<p>有的系统需要：</p>
-<p><strong>sudo vim /etc/security/limits.d/20-nproc.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*   soft    nproc   50960</div></pre></td></tr></table></figure>
-<p>新打开的session里生效。</p>
-<h2 id="Virtual-memory"><a href="#Virtual-memory" class="headerlink" title="Virtual memory"></a>Virtual memory</h2><p>虚拟内存设置。Elasticsearch默认使用mmapfs、sniofs 两种方式存储索引。也可以修改配置<em>index.store.type</em>确定使用任意一种。操作系统默认的<strong>最大mmap数</strong>比较低，可能会导致内存异常。永久修改修改max_map_count:</p>
-<p><strong>sudo vim /etc/sysctl.conf</strong>，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vm.max_map_count=2621440</div></pre></td></tr></table></figure>
-<p>然后执行命令：</p>
-<p><strong>sudo sysctl -p</strong></p>
-<h2 id="heap-size设置"><a href="#heap-size设置" class="headerlink" title="heap size设置"></a>heap size设置</h2><p>设置heap size最小值(Xms)，heap size最大值(Xmx), 通过修改配置文件，<strong>vim elasticsearch-5.1.2/config/jvm.options</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-Xms2g</div><div class="line">-Xmx2g</div></pre></td></tr></table></figure>
-<p>堆设置很好的经验法则：</p>
-<ul>
-<li>最小heap size(Xms) 和 最大heap size(Xmx)相等</li>
-<li>最大heap size(Xmx)设置为50%物理内存，剩下50%作为文件系统缓存。</li>
-<li>不超过32GB。堆大小在某个cutoff(将近32GB)范围内时，JVM使用compressed oops技术来优化内存、带宽、缓存使用。所以最大heap size(Xmx)不要超过这个cutoff。Elasticsearch的log中如果有下面类似的log，表明Xms没超过这个cutoff。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">heap size [1.9gb], compressed ordinary object pointers [true]</div></pre></td></tr></table></figure>
-<ul>
-<li>更好的设置是，heap size不要超过JVM使用zero-based compressed oops技术时的cutoff。不同的系统，cutoff不相同。大部分系统，26GB的最大heap size(Xmx)是安全的，有些系统30G也可以。带上 -XX:+UnlockDiagnosticVMOptions -XX:+PrintCompressedOopsMode这两个JVM options启动Elasticsearch时，下面的log则表明启用了zero-based compressed oops技术：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">heap address: 0x000000011be00000, size: 27648 MB, zero based Compressed Oops</div></pre></td></tr></table></figure>
-<p>下面的则表明未启用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">heap address: 0x0000000118400000, size: 28672 MB, Compressed Oops with base: 0x00000001183ff000</div></pre></td></tr></table></figure>
-<p>Java中的对象分配在堆中，由指针引用。这些指向java对象的指针叫做Ordinary object pointers(oop)，他们的大小实际就是CPU的本地字长，32bit或64bit，这 32 bits 或 64 bits 的指针的值，是堆中确定的byte位置。</p>
-<p>所以32-bit的系统中，oop最多只能指向2^32 byte, 即heap size最大只能4GB，而64-bit系统，heap size大的多。64位的指针本身更大，占用空间更多，同一个应用在64-bit系统使用的堆空间大概是32-bit系统的1.5倍。除了更消耗内存，更糟糕的是，更长的指针在主存和各种缓存(LLC, L1等等)间移动时，消耗更多的带宽。</p>
-<p>32 bits 的短指针来引用的内存空间不够，64 bits的长指针会带来性能损耗，怎么办呢？JVM使用了Compressed Ordinary Object Pointers(compressed oops)的技术。这种 32 bits 指针指向的不再是堆中byte 位置，而是对象偏移量。这意味着 32 bits 的指针可以指向2^32个对象，大约32GB大小。一旦超过32G，compressed oops会变成oop，所以heap size不要超过32G。</p>
-<h2 id="Disable-swapping设置"><a href="#Disable-swapping设置" class="headerlink" title="Disable swapping设置"></a>Disable swapping设置</h2><p>swapping(内存交换)会导致JVM heap被交换到磁盘上，导致很差的性能和Elasticsearch节点的不稳定。应该不惜一切代价禁止swapping。禁止swapping的一种方法就是锁住JVM内存</p>
-<h3 id="锁内存"><a href="#锁内存" class="headerlink" title="锁内存"></a>锁内存</h3><p>修改配置文件，<strong>vim elasticsearch-5.1.2/config/elasticsearch.yml</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bootstrap.memory_lock: true</div></pre></td></tr></table></figure>
-<p>赋予运行Elasticsearch的用户(本文用户是hadoop)锁内存权限：</p>
-<p><strong>sudo vim /etc/security/limits.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># allow user &apos;hadoop&apos; mlockall</div><div class="line">hadoop soft memlock unlimited</div><div class="line">hadoop hard memlock unlimited</div></pre></td></tr></table></figure>
+        <p>Elasticsearch和Hbase都是非常流行的大数据存储方案，有相似也有很大不同，本文对二者做个比较全面的比较。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Elasticsearch是一个近实时的搜索引擎，对document进行索引和搜索，索引包括基本的CRUD操作，搜索基于自己的Query DSL，能执行复杂的查询，此外还有聚合功能等等。它的数据模型是：索引，类型，文档。</p>
+<p>Hbase是运行与hadoop之上的Nosql数据库，它的数据模型：表、行、列族、Cells，它对数据模型的主要操作是Get, Put, Scan, 和 Delete。</p>
+<h2 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h2><h3 id="对比列表"><a href="#对比列表" class="headerlink" title="对比列表"></a>对比列表</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Elasticsearch</th>
+<th>Hbase</th>
+<th>说明  </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>扩展性</td>
+<td>可扩展</td>
+<td>可扩展</td>
+<td></td>
+</tr>
+<tr>
+<td>部署难易</td>
+<td>简单</td>
+<td>复杂</td>
+<td>Hbase依赖hadoop，部署复杂。</td>
+</tr>
+<tr>
+<td>高可用</td>
+<td>是</td>
+<td>是</td>
+<td>二者架构都实现了高可用。</td>
+</tr>
+<tr>
+<td>数据量</td>
+<td>海量数据</td>
+<td>海量数据</td>
+<td></td>
+</tr>
+<tr>
+<td>并发能力</td>
+<td>高并发</td>
+<td>高并发</td>
+<td></td>
+</tr>
+<tr>
+<td>一致性</td>
+<td>最终一致性</td>
+<td>强一致性</td>
+<td>Elasticsearch有三种一致性方案。</td>
+</tr>
+<tr>
+<td>访问方式</td>
+<td>Java API，Restful API</td>
+<td>Java API，Restful API，Thrift Server</td>
+<td></td>
+</tr>
+<tr>
+<td>编程语言</td>
+<td>多种</td>
+<td>多种</td>
+<td></td>
+</tr>
+<tr>
+<td>实现语言</td>
+<td>Java</td>
+<td>Java</td>
+<td></td>
+</tr>
+<tr>
+<td>SQL支持</td>
+<td>第三方工具</td>
+<td>第三方工具</td>
+<td></td>
+</tr>
+<tr>
+<td>MapReduce</td>
+<td>不支持</td>
+<td>支持</td>
+<td></td>
+</tr>
+<tr>
+<td>分区方式</td>
+<td>sharding</td>
+<td>sharding</td>
+<td>Elasticsearch索引会分成不同的分片，Hbase的表会划分成region。</td>
+</tr>
+<tr>
+<td>data scheme</td>
+<td>scheme-free</td>
+<td>scheme-free</td>
+<td>二者都易增减字段，但是es的字段带类型，类型确定后，不能更改。</td>
+</tr>
+<tr>
+<td>多索引</td>
+<td>是</td>
+<td>否</td>
+<td>Elasticsearch每个字段都被索引。</td>
+</tr>
+<tr>
+<td>写入速度</td>
+<td>不快</td>
+<td>非常快</td>
+<td></td>
+</tr>
+<tr>
+<td>查询速度</td>
+<td>很快</td>
+<td>get、限定rowkey的查询很快</td>
+<td></td>
+</tr>
+<tr>
+<td>查询功能</td>
+<td>查询功能强</td>
+<td>简单查询</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="写能力"><a href="#写能力" class="headerlink" title="写能力"></a>写能力</h3><p>Elasticsearch通过api提供了普通写入和bulk写入两种方式，可以通过修改配置、增加节点方式提高写入速度，可达几千，几万documents/s, 但在海量数据下，仍显太慢。同样集群，es写入速度远比Hbase慢。</p>
+<p>Hbase写入速度快，也提供了bulkload等多种方法导入数据，提高了海量数据写入速度。</p>
+<h3 id="读能力"><a href="#读能力" class="headerlink" title="读能力"></a>读能力</h3><p>Elasticsearch中各个字段都被索引，不仅get操作快，按多个字段的查询操作也很快。</p>
+<p>Hbase的get操作非常快， 如果不限定rowkey，scan非常慢。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Elasticsearch 适合应用于流式写入，频繁多字段查询、分析的场景。不适合频繁大量写入、更新数据的场景。</p>
+<p>Hbase 适合频繁大量数据写入、更新，频繁的key-value查询的场景。不适合多字段查询的场景。</p>
 <p>.<br>.<br>.  </p>
 
       
@@ -478,11 +568,11 @@ sudo vim /etc/security/limits.conf
           
             <a href="/tags/Elasticsearch/" rel="tag"># Elasticsearch</a>
           
+            <a href="/tags/Hbase/" rel="tag"># Hbase</a>
+          
+            <a href="/tags/对比/" rel="tag"># 对比</a>
+          
             <a href="/tags/bigdata/" rel="tag"># bigdata</a>
-          
-            <a href="/tags/重要配置/" rel="tag"># 重要配置</a>
-          
-            <a href="/tags/optimization/" rel="tag"># optimization</a>
           
         </div>
       
@@ -495,8 +585,8 @@ sudo vim /etc/security/limits.conf
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/16/elasticsearch从开始到优化：性能优化/" rel="next" title="《Elasticsearch从开始到优化：性能优化》">
-                <i class="fa fa-chevron-left"></i> 《Elasticsearch从开始到优化：性能优化》
+              <a href="/2017/03/19/elasticsearch从开始到优化：重要配置/" rel="next" title="《Elasticsearch从开始到优化：重要配置》">
+                <i class="fa fa-chevron-left"></i> 《Elasticsearch从开始到优化：重要配置》
               </a>
             
           </div>
@@ -504,10 +594,6 @@ sudo vim /etc/security/limits.conf
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/26/Elasticsearch与Hbase比较/" rel="prev" title="《Elasticsearch与Hbase比较》">
-                《Elasticsearch与Hbase比较》 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -647,7 +733,7 @@ sudo vim /etc/security/limits.conf
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#File-Descriptors"><span class="nav-number">1.</span> <span class="nav-text">File Descriptors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Number-of-threads"><span class="nav-number">2.</span> <span class="nav-text">Number of threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-memory"><span class="nav-number">3.</span> <span class="nav-text">Virtual memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heap-size设置"><span class="nav-number">4.</span> <span class="nav-text">heap size设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disable-swapping设置"><span class="nav-number">5.</span> <span class="nav-text">Disable swapping设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#锁内存"><span class="nav-number">5.1.</span> <span class="nav-text">锁内存</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较"><span class="nav-number">2.</span> <span class="nav-text">比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对比列表"><span class="nav-number">2.1.</span> <span class="nav-text">对比列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写能力"><span class="nav-number">2.2.</span> <span class="nav-text">写能力</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#读能力"><span class="nav-number">2.3.</span> <span class="nav-text">读能力</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
