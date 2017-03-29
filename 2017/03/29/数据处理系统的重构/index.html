@@ -78,7 +78,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Elasticsearch,bigdata,optimization,重要配置," />
+  <meta name="keywords" content="Elasticsearch,Hbase,bigdata,architecture,Spark SQL,Spark Streaming,Spark ML,Amazon Kinesis,Amazon Redshift," />
 
 
 
@@ -94,25 +94,22 @@
 
 
 
-<meta name="description" content="Elasticsearch启动时会检查一些很重要的设置是否配置，如果没配置，可能会出现无法预料的问题。
-File Descriptors文件描述符设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max file descriptors:
-sudo vim /etc/security/limits.conf
-12* soft nofile 655360* hard">
+<meta name="description" content="数据处理系统是一个复杂庞大的系统，涵盖了数据采集、清洗、计算、加载，数据挖掘，数据可视化等环节，每个环节都是一个复杂的系统，也有各种各样的技术实现，整个系统由各个环节串联而成，任何环节都可能影响整个系统的可靠性，稳定性和处理能力，所以选择合适的技术和方案很重要。
+重构原因原有的数据处理系统大概架构，如图 1。其中：Amazon S3: Amazon Simple Storage Service,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《Elasticsearch从开始到优化：重要配置》">
-<meta property="og:url" content="http://www.followeye.com/2017/03/19/elasticsearch从开始到优化：重要配置/index.html">
+<meta property="og:title" content="数据处理系统重构">
+<meta property="og:url" content="http://www.followeye.com/2017/03/29/数据处理系统的重构/index.html">
 <meta property="og:site_name" content="Xin's blog">
-<meta property="og:description" content="Elasticsearch启动时会检查一些很重要的设置是否配置，如果没配置，可能会出现无法预料的问题。
-File Descriptors文件描述符设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max file descriptors:
-sudo vim /etc/security/limits.conf
-12* soft nofile 655360* hard">
-<meta property="og:updated_time" content="2017-03-24T05:41:56.811Z">
+<meta property="og:description" content="数据处理系统是一个复杂庞大的系统，涵盖了数据采集、清洗、计算、加载，数据挖掘，数据可视化等环节，每个环节都是一个复杂的系统，也有各种各样的技术实现，整个系统由各个环节串联而成，任何环节都可能影响整个系统的可靠性，稳定性和处理能力，所以选择合适的技术和方案很重要。
+重构原因原有的数据处理系统大概架构，如图 1。其中：Amazon S3: Amazon Simple Storage Service,">
+<meta property="og:image" content="http://www.followeye.com/images/old-data-arch.png">
+<meta property="og:image" content="http://www.followeye.com/images/new-data-arch.png">
+<meta property="og:updated_time" content="2017-03-29T03:05:05.933Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《Elasticsearch从开始到优化：重要配置》">
-<meta name="twitter:description" content="Elasticsearch启动时会检查一些很重要的设置是否配置，如果没配置，可能会出现无法预料的问题。
-File Descriptors文件描述符设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max file descriptors:
-sudo vim /etc/security/limits.conf
-12* soft nofile 655360* hard">
+<meta name="twitter:title" content="数据处理系统重构">
+<meta name="twitter:description" content="数据处理系统是一个复杂庞大的系统，涵盖了数据采集、清洗、计算、加载，数据挖掘，数据可视化等环节，每个环节都是一个复杂的系统，也有各种各样的技术实现，整个系统由各个环节串联而成，任何环节都可能影响整个系统的可靠性，稳定性和处理能力，所以选择合适的技术和方案很重要。
+重构原因原有的数据处理系统大概架构，如图 1。其中：Amazon S3: Amazon Simple Storage Service,">
+<meta name="twitter:image" content="http://www.followeye.com/images/old-data-arch.png">
 
 
 
@@ -140,13 +137,13 @@ sudo vim /etc/security/limits.conf
 
 
 
-  <link rel="canonical" href="http://www.followeye.com/2017/03/19/elasticsearch从开始到优化：重要配置/"/>
+  <link rel="canonical" href="http://www.followeye.com/2017/03/29/数据处理系统的重构/"/>
 
 
 
 
 
-  <title> 《Elasticsearch从开始到优化：重要配置》 | Xin's blog </title>
+  <title> 数据处理系统重构 | Xin's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -285,7 +282,7 @@ sudo vim /etc/security/limits.conf
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.followeye.com/2017/03/19/elasticsearch从开始到优化：重要配置/">
+    <link itemprop="mainEntityOfPage" href="http://www.followeye.com/2017/03/29/数据处理系统的重构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Xin Mei">
@@ -306,7 +303,7 @@ sudo vim /etc/security/limits.conf
             
             
               
-                《Elasticsearch从开始到优化：重要配置》
+                数据处理系统重构
               
             
           </h1>
@@ -321,8 +318,8 @@ sudo vim /etc/security/limits.conf
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-19T21:46:25+08:00">
-                2017-03-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-29T22:35:26+08:00">
+                2017-03-29
               </time>
             
 
@@ -355,8 +352,8 @@ sudo vim /etc/security/limits.conf
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bigdata/Elasticsearch/" itemprop="url" rel="index">
-                    <span itemprop="name">Elasticsearch</span>
+                  <a href="/categories/bigdata/architecture/" itemprop="url" rel="index">
+                    <span itemprop="name">architecture</span>
                   </a>
                 </span>
 
@@ -390,48 +387,50 @@ sudo vim /etc/security/limits.conf
       
 
       
-        <p>Elasticsearch启动时会检查一些很重要的设置是否配置，如果没配置，可能会出现无法预料的问题。</p>
-<h2 id="File-Descriptors"><a href="#File-Descriptors" class="headerlink" title="File Descriptors"></a>File Descriptors</h2><p>文件描述符设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max file descriptors:</p>
-<p><strong>sudo vim /etc/security/limits.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* soft nofile 655360</div><div class="line">* hard nofile 655360</div></pre></td></tr></table></figure>
-<p>新打开的session里生效。</p>
-<h2 id="Number-of-threads"><a href="#Number-of-threads" class="headerlink" title="Number of threads"></a>Number of threads</h2><p>用户进程数设置。使用Elasticsearch 的zip或tar.gz安装包时，永久修改修改max user processes:</p>
-<p><strong>sudo vim /etc/security/limits.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">*   soft    nproc   50960</div><div class="line">*   hard    nproc   50960</div></pre></td></tr></table></figure>
-<p>有的系统需要：</p>
-<p><strong>sudo vim /etc/security/limits.d/20-nproc.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">*   soft    nproc   50960</div></pre></td></tr></table></figure>
-<p>新打开的session里生效。</p>
-<h2 id="Virtual-memory"><a href="#Virtual-memory" class="headerlink" title="Virtual memory"></a>Virtual memory</h2><p>虚拟内存设置。Elasticsearch默认使用mmapfs、sniofs 两种方式存储索引。也可以修改配置<em>index.store.type</em>确定使用任意一种。操作系统默认的<strong>最大mmap数</strong>比较低，可能会导致内存异常。永久修改修改max_map_count:</p>
-<p><strong>sudo vim /etc/sysctl.conf</strong>，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vm.max_map_count=2621440</div></pre></td></tr></table></figure>
-<p>然后执行命令：</p>
-<p><strong>sudo sysctl -p</strong></p>
-<h2 id="heap-size设置"><a href="#heap-size设置" class="headerlink" title="heap size设置"></a>heap size设置</h2><p>设置heap size最小值(Xms)，heap size最大值(Xmx), 通过修改配置文件，<strong>vim elasticsearch-5.1.2/config/jvm.options</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-Xms2g</div><div class="line">-Xmx2g</div></pre></td></tr></table></figure>
-<p>堆设置很好的经验法则：</p>
+        <p>数据处理系统是一个复杂庞大的系统，涵盖了数据采集、清洗、计算、加载，数据挖掘，数据可视化等环节，每个环节都是一个复杂的系统，也有各种各样的技术实现，整个系统由各个环节串联而成，任何环节都可能影响整个系统的可靠性，稳定性和处理能力，所以选择合适的技术和方案很重要。</p>
+<h2 id="重构原因"><a href="#重构原因" class="headerlink" title="重构原因"></a>重构原因</h2><p>原有的数据处理系统大概架构，如图 1。其中：<br>Amazon S3: Amazon Simple Storage Service, 亚马逊云存储服务。<br>Amazon Redshift: 亚马逊基于PostgreSQL开发的数据仓库服务。</p>
+<p><img src="/images/old-data-arch.png" alt="图片链接" title="图1. 老数据处理架构"></p>
+<p>如图1 所示，整个系统主要有采集、清洗、计算，存储，上层应用等主要环节，主要基于Redshift做离线计算。<br>这个系统主要的问题:</p>
 <ul>
-<li>最小heap size(Xms) 和 最大heap size(Xmx)相等</li>
-<li>最大heap size(Xmx)设置为50%物理内存，剩下50%作为文件系统缓存。</li>
-<li>不超过32GB。堆大小在某个cutoff(将近32GB)范围内时，JVM使用compressed oops技术来优化内存、带宽、缓存使用。所以最大heap size(Xmx)不要超过这个cutoff。Elasticsearch的log中如果有下面类似的log，表明Xms没超过这个cutoff。</li>
+<li><p>数据处理速度慢<br>随着业务增长，数据量越来越大，基于Redshift的计算越来越慢，一个job跑完花费几个小时，报表生成滞后严重，影响相关人员的使用。</p>
+</li>
+<li><p>监控不完善<br>监控不足，导致数据异常后，不能及时发现，发现了也很难排查和定位问题，需要很高的人力成本。</p>
+</li>
+<li><p>数据时效性低<br>由于整个系统没有实时计算，导致数据的时效性低，不能实时了解线上业务运行状况。</p>
+</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">heap size [1.9gb], compressed ordinary object pointers [true]</div></pre></td></tr></table></figure>
+<p>综上原因，老的数据处理系统，已经不能满足业务发展需求，因此开始了整个系统的重构。</p>
+<h2 id="新数据处理系统"><a href="#新数据处理系统" class="headerlink" title="新数据处理系统"></a>新数据处理系统</h2><p>新的数据处理系统主要引入了Kinesis，Spark等相关技术，同时开发了新的数据可视化系统。新数据处理系统包括多个业务功能，整体数据流架构如图2，其中：<br>Amazon Kinesis Stream/Firehose: 亚马逊的Kafka，又在功能上进行了扩展。<br>Kstash/Ksplit/Kupload: 实时数据清洗、处理、分发应用。</p>
+<p><img src="/images/new-data-arch.png" alt="说明" title="图2. 大数据处理系统架构"></p>
+<p>如图所示，整个大数据处理过程包括数据源、数据通道、数据计算处理、数据存储、应用等环节。各个环节都具有弹性，出现性能瓶颈时，很容易扩展。数据流向的各环节有监控，出现异常能及时报警。整个系统的计算有两种：离线计算、实时计算。</p>
+<p>下面说明下大数据处理系统各个阶段的实现及原因。</p>
+<ol>
+<li>数据采集</li>
+</ol>
+<p>本公司的游戏各个产品主要面向欧美和亚洲用户，横跨多个时区，为了节省成本、提高效率，公司的各个系统偏向使用亚马逊提供的云服务，包括服务器，数据库，存储等等。</p>
+<p>由于业务越来越多，数据源也越来越多，包括老的游戏gameserver记录的数据，API server采集的客户端或SDK的数据，第三方平台的发送的数据等等，数据位置也分散在世界各地，数据源的复杂性，使得实现快速、稳定的数据采集系统有很大的挑战。</p>
+<p>经过技术调研，最终选择Amazon Kinesis作为数据通道，将各种数据源统一接入，在各个数据源处，部署Kinesis Agent，自动将数据采集到Kinesis中。Amazon Kinesis 实时、可靠、易用、成本低，可随时根据需要动态调节数据流的吞吐量，使用它，使整个采集系统更可靠，容易维护。</p>
+<ol>
+<li>数据处理与加载</li>
+</ol>
+<p>老系统是基于SQL的，各个指标的计算逻辑都是使用SQL实现的，使用MapReduce或其他方式来重新计算各个指标，工作量实在太大。所以首选支持SQL的大数据方案。经过比较，最终选择使用Spark，它提供了SQL计算引擎，Spark SQL，只需较少的代价，就可替代老的SQL计算逻辑。同时，Spark 还提供了Spark Streaming、Spark ML，只需一种框架就能实现实时计算、机器学习等功能，大大降低了使用成本。</p>
+<p>Kinesis中的数据多种多样，有结构化的数据，也有非结构化的数据。对结构化的数据，可以直接供spark计算。对于非结构化的数据，先经过清洗、处理，生成结构化的数据，再供spark计算，以便减轻spark集群的压力，提高计算速度。</p>
+<p>经过计算处理后的数据，按不同的业务需求，加载到不同存储中，比如每日报表、实时指标加载到Redshift，线上应用实时日志加载到Elasticsearch中，用户画像系统数据加载到Hbase中。</p>
+<ol>
+<li>数据流程监控</li>
+</ol>
+<p>监控功能涵盖了数据采集、计算、加载各个环节，监控指标包括各个游戏数据量、指标的计算和加载状态、job状态、时长等，一旦有异常及时报警。</p>
+<ol>
+<li>数据应用</li>
+</ol>
+<p>老系统使用第三方BI工具，不够灵活。所以对每日报表和实时指标，重新开发了一套完善的可视化系统。线上实时日志检索和分析，使用Kibana。用户画像产生的数据，供运营系统使用。</p>
+<h2 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h2><p>开发新系统遇到了很多的难点，其中最大的是Spark的使用。刚开始的Spark 程序运行很慢，不能满足需求，逐步优化，最终，离线处理时间降到了一小时内。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>新大数据处理系统经过近一年的开发、部署、测试，完全替代了老的系统，并稳定运行。<br>新系统带来了很大的改进:</p>
 <ul>
-<li>更好的设置是，heap size不要超过JVM使用zero-based compressed oops技术时的cutoff。不同的系统，cutoff不相同。大部分系统，26GB的最大heap size(Xmx)是安全的，有些系统30G也可以。带上 -XX:+UnlockDiagnosticVMOptions -XX:+PrintCompressedOopsMode这两个JVM options启动Elasticsearch时，下面的log则表明启用了zero-based compressed oops技术：</li>
+<li>Spark 集群规模不到Redshift集群一半，离线计算速度却提高了5倍以上</li>
+<li>实时数据帮助实时监控线上产品运行状况</li>
+<li>更加完善的数据体系让产品运营更加方便、更加高效、更加精准</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">heap address: 0x000000011be00000, size: 27648 MB, zero based Compressed Oops</div></pre></td></tr></table></figure>
-<p>下面的则表明未启用：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">heap address: 0x0000000118400000, size: 28672 MB, Compressed Oops with base: 0x00000001183ff000</div></pre></td></tr></table></figure>
-<p>Java中的对象分配在堆中，由指针引用。这些指向java对象的指针叫做Ordinary object pointers(oop)，他们的大小实际就是CPU的本地字长，32bit或64bit，这 32 bits 或 64 bits 的指针的值，是堆中确定的byte位置。</p>
-<p>所以32-bit的系统中，oop最多只能指向2^32 byte, 即heap size最大只能4GB，而64-bit系统，heap size大的多。64位的指针本身更大，占用空间更多，同一个应用在64-bit系统使用的堆空间大概是32-bit系统的1.5倍。除了更消耗内存，更糟糕的是，更长的指针在主存和各种缓存(LLC, L1等等)间移动时，消耗更多的带宽。</p>
-<p>32 bits 的短指针来引用的内存空间不够，64 bits的长指针会带来性能损耗，怎么办呢？JVM使用了Compressed Ordinary Object Pointers(compressed oops)的技术。这种 32 bits 指针指向的不再是堆中byte 位置，而是对象偏移量。这意味着 32 bits 的指针可以指向2^32个对象，大约32GB大小。一旦超过32G，compressed oops会变成oop，所以heap size不要超过32G。</p>
-<h2 id="Disable-swapping设置"><a href="#Disable-swapping设置" class="headerlink" title="Disable swapping设置"></a>Disable swapping设置</h2><p>swapping(内存交换)会导致JVM heap被交换到磁盘上，导致很差的性能和Elasticsearch节点的不稳定。应该不惜一切代价禁止swapping。禁止swapping的一种方法就是锁住JVM内存</p>
-<h3 id="锁内存"><a href="#锁内存" class="headerlink" title="锁内存"></a>锁内存</h3><p>修改配置文件，<strong>vim elasticsearch-5.1.2/config/elasticsearch.yml</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">bootstrap.memory_lock: true</div></pre></td></tr></table></figure>
-<p>赋予运行Elasticsearch的用户(本文用户是hadoop)锁内存权限：</p>
-<p><strong>sudo vim /etc/security/limits.conf</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># allow user &apos;hadoop&apos; mlockall</div><div class="line">hadoop soft memlock unlimited</div><div class="line">hadoop hard memlock unlimited</div></pre></td></tr></table></figure>
-<p>.<br>.<br>.  </p>
 
       
     </div>
@@ -478,11 +477,21 @@ sudo vim /etc/security/limits.conf
           
             <a href="/tags/Elasticsearch/" rel="tag"># Elasticsearch</a>
           
+            <a href="/tags/Hbase/" rel="tag"># Hbase</a>
+          
             <a href="/tags/bigdata/" rel="tag"># bigdata</a>
           
-            <a href="/tags/optimization/" rel="tag"># optimization</a>
+            <a href="/tags/architecture/" rel="tag"># architecture</a>
           
-            <a href="/tags/重要配置/" rel="tag"># 重要配置</a>
+            <a href="/tags/Spark-SQL/" rel="tag"># Spark SQL</a>
+          
+            <a href="/tags/Spark-Streaming/" rel="tag"># Spark Streaming</a>
+          
+            <a href="/tags/Spark-ML/" rel="tag"># Spark ML</a>
+          
+            <a href="/tags/Amazon-Kinesis/" rel="tag"># Amazon Kinesis</a>
+          
+            <a href="/tags/Amazon-Redshift/" rel="tag"># Amazon Redshift</a>
           
         </div>
       
@@ -495,8 +504,8 @@ sudo vim /etc/security/limits.conf
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/16/elasticsearch从开始到优化：性能优化/" rel="next" title="《Elasticsearch从开始到优化：性能优化》">
-                <i class="fa fa-chevron-left"></i> 《Elasticsearch从开始到优化：性能优化》
+              <a href="/2017/03/26/Elasticsearch与Hbase比较/" rel="next" title="《Elasticsearch与Hbase比较》">
+                <i class="fa fa-chevron-left"></i> 《Elasticsearch与Hbase比较》
               </a>
             
           </div>
@@ -504,10 +513,6 @@ sudo vim /etc/security/limits.conf
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/26/Elasticsearch与Hbase比较/" rel="prev" title="《Elasticsearch与Hbase比较》">
-                《Elasticsearch与Hbase比较》 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -647,7 +652,7 @@ sudo vim /etc/security/limits.conf
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#File-Descriptors"><span class="nav-number">1.</span> <span class="nav-text">File Descriptors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Number-of-threads"><span class="nav-number">2.</span> <span class="nav-text">Number of threads</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Virtual-memory"><span class="nav-number">3.</span> <span class="nav-text">Virtual memory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heap-size设置"><span class="nav-number">4.</span> <span class="nav-text">heap size设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Disable-swapping设置"><span class="nav-number">5.</span> <span class="nav-text">Disable swapping设置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#锁内存"><span class="nav-number">5.1.</span> <span class="nav-text">锁内存</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#重构原因"><span class="nav-number">1.</span> <span class="nav-text">重构原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新数据处理系统"><span class="nav-number">2.</span> <span class="nav-text">新数据处理系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#难点"><span class="nav-number">3.</span> <span class="nav-text">难点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
             
 
           </div>
